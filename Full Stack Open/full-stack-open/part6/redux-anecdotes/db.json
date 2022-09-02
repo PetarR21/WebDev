@@ -2,13 +2,13 @@
   "anecdotes": [
     {
       "content": "If it hurts, do it more often",
-      "id": "47145",
-      "votes": 0
+      "votes": 3,
+      "id": "47145"
     },
     {
       "content": "Adding manpower to a late software project makes it later!",
-      "id": "21149",
-      "votes": 0
+      "votes": 2,
+      "id": "21149"
     },
     {
       "content": "The first 90 percent of the code accounts for the first 90 percent of the development time...The remaining 10 percent of the code accounts for the other 90 percent of the development time.",
@@ -29,6 +29,16 @@
       "content": "Debugging is twice as hard as writing the code in the first place. Therefore, if you write the code as cleverly as possible, you are, by definition, not smart enough to debug it.",
       "id": "98312",
       "votes": 0
+    },
+    {
+      "content": "test",
+      "votes": 0,
+      "id": "pTBDArC"
+    },
+    {
+      "content": "new",
+      "votes": 0,
+      "id": "PcpD6YR"
     }
   ]
 }
