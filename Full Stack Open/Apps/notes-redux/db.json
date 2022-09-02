@@ -11,14 +11,9 @@
       "id": 2
     },
     {
-      "content": "test",
+      "content": "new note",
       "important": false,
       "id": 3
-    },
-    {
-      "content": "new",
-      "important": false,
-      "id": 4
     }
   ]
 }
