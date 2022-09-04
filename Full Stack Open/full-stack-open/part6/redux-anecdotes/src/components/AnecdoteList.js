@@ -31,7 +31,6 @@ const AnecdoteList = (props) => {
             anecdote={anecdote}
             handleClick={() => {
               props.voteForAnecdote(anecdote);
-              clearTimeout();
               props.setUpNotification(`You voted for '${anecdote.content}'`, 5);
             }}
           />
