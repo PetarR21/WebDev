@@ -1,36 +1,21 @@
-import { useDispatch, useSelector } from 'react-redux';
+import { connect } from 'react-redux';
 import { voteForAnecdote } from '../reducers/anecdoteReducer';
-import {
-  setUpNotification
-} from '../reducers/notificationReducer';
+import { setUpNotification } from '../reducers/notificationReducer';
 
-const Anecdote = ({ anecdote }) => {
-  const dispatch = useDispatch();
-
-  const vote = (anecdote) => {
-    dispatch(voteForAnecdote(anecdote));
-    dispatch(setUpNotification(`You voted for '${anecdote.content}'`,5));
-  };
-
+const Anecdote = ({ anecdote, handleClick }) => {
   return (
     <div>
       {anecdote.content}
       <br></br>
       has {anecdote.votes}
-      <button
-        onClick={() => {
-          vote(anecdote);
-        }}
-      >
-        vote
-      </button>
+      <button onClick={handleClick}>vote</button>
     </div>
   );
 };
 
-const AnecdoteList = () => {
-  const filter = useSelector((state) => state.filter);
-  const anecdotes = useSelector((state) => state.anecdotes);
+const AnecdoteList = (props) => {
+  const filter = props.filter;
+  const anecdotes = props.anecdotes;
   const anecdotesByVote = [...anecdotes].sort((a, b) => b.votes - a.votes);
 
   const filteredAnecdotes = [...anecdotesByVote].filter((anecdote) =>
@@ -40,10 +25,36 @@ const AnecdoteList = () => {
   return (
     <div>
       {filteredAnecdotes.map((anecdote) => {
-        return <Anecdote key={anecdote.id} anecdote={anecdote} />;
+        return (
+          <Anecdote
+            key={anecdote.id}
+            anecdote={anecdote}
+            handleClick={() => {
+              props.voteForAnecdote(anecdote);
+              props.setUpNotification(`You voted for '${anecdote.content}'`, 5);
+            }}
+          />
+        );
       })}
     </div>
   );
 };
 
-export default AnecdoteList;
+const mapStateToProps = (state) => {
+  return {
+    anecdotes: state.anecdotes,
+    filter: state.filter,
+  };
+};
+
+const mapDispatchToProps = {
+  voteForAnecdote,
+  setUpNotification,
+};
+
+const ConnectedAnecdoteList = connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(AnecdoteList);
+
+export default ConnectedAnecdoteList;
