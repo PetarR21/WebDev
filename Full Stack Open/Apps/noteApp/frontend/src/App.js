@@ -70,9 +70,7 @@ const App = () => {
         setNotes(notes.map((note) => (note.id !== id ? note : returnedNote)));
       })
       .catch((error) => {
-        setErrorMessage(
-          `Note '${note.content}' was already removed from server`
-        );
+        setErrorMessage(`Note '${note.content}' was already removed from server`);
         setTimeout(() => {
           setErrorMessage(null);
         }, 5000);
@@ -109,17 +107,11 @@ const App = () => {
       )}
 
       <div>
-        <button onClick={() => setShowAll(!showAll)}>
-          show {showAll ? 'important' : 'all'}
-        </button>
+        <button onClick={() => setShowAll(!showAll)}>show {showAll ? 'important' : 'all'}</button>
       </div>
       <ul>
         {notesToShow.map((note) => (
-          <Note
-            key={note.id}
-            note={note}
-            toggleImportance={() => toggleImportanceOf(note.id)}
-          />
+          <Note key={note.id} note={note} toggleImportance={() => toggleImportanceOf(note.id)} />
         ))}
       </ul>
       <Footer />
