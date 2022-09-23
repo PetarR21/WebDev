@@ -4,44 +4,24 @@ import Blogs from './components/Blogs';
 import LoginForm from './components/LoginForm';
 import BlogsForm from './components/BlogsForm';
 import Notification from './components/Notification';
-import Togglable from './components/Togglable';
+
+import { useSelector, useDispatch } from 'react-redux';
+import { setUser } from './reducers/userReducer';
 
 import blogService from './services/blogs';
-import loginService from './services/login';
 
 const App = () => {
-  const [user, setUser] = useState(null);
+  const user = useSelector((state) => state.user);
+  const dispatch = useDispatch();
 
   useEffect(() => {
     const loggedUserJSON = window.localStorage.getItem('loggedUser');
     if (loggedUserJSON) {
       const user = JSON.parse(loggedUserJSON);
-      setUser(user);
+      dispatch(setUser(user));
       blogService.setToken(user.token);
     }
   }, []);
-
-  const handleLogin = async (event) => {
-    event.preventDefault();
-
-    try {
-      const user = await loginService.login({ username, password });
-
-      window.localStorage.setItem('loggedUser', JSON.stringify(user));
-      blogService.setToken(user.token);
-      setUser(user);
-      setUsername('');
-      setPassword('');
-    } catch (exception) {
-      setNotification({
-        message: `wrong username or password`,
-        type: 'error',
-      });
-      setTimeout(() => {
-        setNotification(null);
-      }, 4000);
-    }
-  };
 
   return (
     <div>
@@ -49,7 +29,7 @@ const App = () => {
         <div>
           <h2>login to application</h2>
           <Notification />
-          <LoginForm handleLogin={handleLogin} />
+          <LoginForm />
         </div>
       ) : (
         <div>
@@ -60,7 +40,7 @@ const App = () => {
             <button
               onClick={() => {
                 window.localStorage.removeItem('loggedUser');
-                setUser(null);
+                dispatch(setUser(null));
               }}
             >
               logout

@@ -20,6 +20,7 @@ const Blogs = () => {
   const removeBlogFor = (blog) => {
     if (window.confirm(`Remove blog ${blog.title} by ${blog.author}`)) {
       dispatch(removeBlog(blog));
+      
     }
   };
 
