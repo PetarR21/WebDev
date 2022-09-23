@@ -33,8 +33,16 @@ export const initialzeBlogs = () => {
 
 export const createBlog = (blogObject) => {
   return async (dispatch) => {
-    const createdBlog = await blogsService.create(blogObject);
-    dispatch(appendBlog(createdBlog));
+    try {
+      const createdBlog = await blogsService.create(blogObject);
+      dispatch(appendBlog(createdBlog));
+      dispatch(
+        setNotificationFor(
+          { message: `successfully created blog ${createdBlog.title} by ${createdBlog.author}`, type: 'success' },
+          5
+        )
+      );
+    } catch (error) {}
   };
 };
 
@@ -58,7 +66,7 @@ export const removeBlog = (blog) => {
       await blogsService.removeBlog(blog.id);
       dispatch(deleteBlog(blog.id));
       dispatch(
-        setNotificationFor({ message: `successfully delete blog ${blog.title} by ${blog.author}`, type: 'success' }, 5)
+        setNotificationFor({ message: `successfully deleted blog ${blog.title} by ${blog.author}`, type: 'success' }, 5)
       );
     } catch (error) {
       dispatch(setNotificationFor({ message: error.response.data.error, type: 'error' }, 5));

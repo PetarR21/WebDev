@@ -10,11 +10,7 @@ import blogService from './services/blogs';
 import loginService from './services/login';
 
 const App = () => {
-  const [username, setUsername] = useState('');
-  const [password, setPassword] = useState('');
   const [user, setUser] = useState(null);
-
-  const [notification, setNotification] = useState(null);
 
   useEffect(() => {
     const loggedUserJSON = window.localStorage.getItem('loggedUser');
@@ -53,13 +49,7 @@ const App = () => {
         <div>
           <h2>login to application</h2>
           <Notification />
-          <LoginForm
-            username={username}
-            setUsername={setUsername}
-            password={password}
-            setPassword={setPassword}
-            handleLogin={handleLogin}
-          />
+          <LoginForm handleLogin={handleLogin} />
         </div>
       ) : (
         <div>
