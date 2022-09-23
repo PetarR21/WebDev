@@ -74,17 +74,11 @@ const App = () => {
       likes: blog.likes + 1,
     });
 
-    setBlogs(
-      blogs.map((blog) => (blog.id === updatedBlog.id ? updatedBlog : blog))
-    );
+    setBlogs(blogs.map((blog) => (blog.id === updatedBlog.id ? updatedBlog : blog)));
   };
 
   const removeBlog = async (blogToRemove) => {
-    if (
-      window.confirm(
-        `Remove blog ${blogToRemove.title} by ${blogToRemove.author}`
-      )
-    ) {
+    if (window.confirm(`Remove blog ${blogToRemove.title} by ${blogToRemove.author}`)) {
       try {
         await blogService.removeBlog(blogToRemove.id);
         setBlogs(blogs.filter((blog) => blog.id !== blogToRemove.id));
@@ -139,11 +133,7 @@ const App = () => {
           <Togglable buttonLabel='new blog' ref={blogFormRef}>
             <BlogsForm createBlog={addBlog} />
           </Togglable>
-          <Blogs
-            blogs={blogs}
-            incrementLikes={incrementLikes}
-            removeBlog={removeBlog}
-          />
+          <Blogs blogs={blogs} incrementLikes={incrementLikes} removeBlog={removeBlog} />
         </div>
       )}
     </div>
