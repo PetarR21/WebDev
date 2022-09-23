@@ -1,19 +1,24 @@
 import Blog from './Blog';
+import { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { initialzeBlogs } from '../reducers/blogsReducer';
 
-const Blogs = ({ blogs, incrementLikes, removeBlog }) => {
-  const sortedBlogs = blogs.sort((blog1, blog2) => {
+const Blogs = ({ incrementLikes, removeBlog }) => {
+  const blogs = useSelector((state) => state.blogs);
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(initialzeBlogs());
+  }, []);
+
+  const sortedBlogs = [...blogs].sort((blog1, blog2) => {
     return blog2.likes - blog1.likes;
   });
 
   return (
     <div>
       {sortedBlogs.map((blog) => (
-        <Blog
-          key={blog.id}
-          blog={blog}
-          incrementLikes={incrementLikes}
-          removeBlog={removeBlog}
-        />
+        <Blog key={blog.id} blog={blog} incrementLikes={incrementLikes} removeBlog={removeBlog} />
       ))}
     </div>
   );
