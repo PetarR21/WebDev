@@ -37,29 +37,25 @@ blogsRouter.post('/', middleware.userExtractor, async (request, response) => {
   response.status(201).json(blogToReturn);
 });
 
-blogsRouter.delete(
-  '/:id',
-  middleware.userExtractor,
-  async (request, response) => {
-    const id = request.params.id;
-    const blogToDelete = await Blog.findById(id);
+blogsRouter.delete('/:id', middleware.userExtractor, async (request, response) => {
+  const id = request.params.id;
+  const blogToDelete = await Blog.findById(id);
 
-    if (!blogToDelete) {
-      response.status(404).end();
-    }
-
-    const user = request.user;
-
-    if (user.id.toString() !== blogToDelete.user.toString()) {
-      response.status(401).json({
-        error: 'unauthorized',
-      });
-    }
-
-    await blogToDelete.remove();
-    response.status(204).end();
+  if (!blogToDelete) {
+    return response.status(404).end();
   }
-);
+
+  const user = request.user;
+
+  if (user.id.toString() !== blogToDelete.user.toString()) {
+    return response.status(401).json({
+      error: 'can not delete blog that was added by another user',
+    });
+  }
+
+  await blogToDelete.remove();
+  response.status(204).end();
+});
 
 blogsRouter.put('/:id', middleware.userExtractor, async (request, response) => {
   const id = request.params.id;
