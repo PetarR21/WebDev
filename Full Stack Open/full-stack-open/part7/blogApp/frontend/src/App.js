@@ -5,8 +5,9 @@ import Notification from './components/Notification';
 import LoggedUser from './components/LoggedUser';
 import BlogsView from './components/BlogsView';
 import UsersView from './components/UsersView';
+import User from './components/User';
 
-import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
+import { Routes, Route, Link, useMatch } from 'react-router-dom';
 
 import { useSelector, useDispatch } from 'react-redux';
 import { setUser } from './reducers/userReducer';
@@ -28,25 +29,23 @@ const App = () => {
 
   return (
     <div>
-      <Router>
-        {user === null ? (
-          <div>
-            <h2>login to application</h2>
-            <Notification />
-            <LoginForm />
-          </div>
-        ) : (
-          <div>
-            <h2>blogs</h2>
-            <Notification />
-            <LoggedUser />
-            <Routes>
-              <Route path='/' element={<BlogsView />} />
-              <Route path='/users' element={<UsersView />} />
-            </Routes>
-          </div>
-        )}
-      </Router>
+      {user === null ? (
+        <div>
+          <h2>login to application</h2>
+          <Notification />
+          <LoginForm />
+        </div>
+      ) : (
+        <div>
+          <h2>blogs</h2>
+          <Notification />
+          <LoggedUser />
+          <Routes>
+            <Route path='/' element={<BlogsView />} />
+            <Route path='/users/*' element={<UsersView />} />
+          </Routes>
+        </div>
+      )}
     </div>
   );
 };
