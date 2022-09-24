@@ -1,3 +1,7 @@
+div {
+  margin: 10px 0;
+}
+
 .notification {
   background: lightgrey;
   font-size: 20px;

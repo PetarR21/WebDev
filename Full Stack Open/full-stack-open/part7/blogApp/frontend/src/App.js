@@ -1,9 +1,12 @@
-import { useState, useEffect, useRef } from 'react';
+import { useEffect } from 'react';
 
-import Blogs from './components/Blogs';
 import LoginForm from './components/LoginForm';
-import BlogsForm from './components/BlogsForm';
 import Notification from './components/Notification';
+import LoggedUser from './components/LoggedUser';
+import BlogsView from './components/BlogsView';
+import UsersView from './components/UsersView';
+
+import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
 
 import { useSelector, useDispatch } from 'react-redux';
 import { setUser } from './reducers/userReducer';
@@ -25,33 +28,25 @@ const App = () => {
 
   return (
     <div>
-      {user === null ? (
-        <div>
-          <h2>login to application</h2>
-          <Notification />
-          <LoginForm />
-        </div>
-      ) : (
-        <div>
-          <h2>blogs</h2>
-          <Notification />
-          <p>
-            {user.name} loggged in{' '}
-            <button
-              onClick={() => {
-                window.localStorage.removeItem('loggedUser');
-                dispatch(setUser(null));
-              }}
-            >
-              logout
-            </button>
-          </p>
-
-          <BlogsForm />
-
-          <Blogs />
-        </div>
-      )}
+      <Router>
+        {user === null ? (
+          <div>
+            <h2>login to application</h2>
+            <Notification />
+            <LoginForm />
+          </div>
+        ) : (
+          <div>
+            <h2>blogs</h2>
+            <Notification />
+            <LoggedUser />
+            <Routes>
+              <Route path='/' element={<BlogsView />} />
+              <Route path='/users' element={<UsersView />} />
+            </Routes>
+          </div>
+        )}
+      </Router>
     </div>
   );
 };
