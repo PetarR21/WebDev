@@ -3,9 +3,8 @@ import { useEffect } from 'react';
 import LoginForm from './components/LoginForm';
 import Notification from './components/Notification';
 import LoggedUser from './components/LoggedUser';
-import BlogsView from './components/BlogsView';
+import HomeView from './components/HomeView';
 import UsersView from './components/UsersView';
-import User from './components/User';
 
 import { Routes, Route, Link, useMatch } from 'react-router-dom';
 
@@ -41,7 +40,7 @@ const App = () => {
           <Notification />
           <LoggedUser />
           <Routes>
-            <Route path='/' element={<BlogsView />} />
+            <Route path='/*' element={<HomeView />} />
             <Route path='/users/*' element={<UsersView />} />
           </Routes>
         </div>
