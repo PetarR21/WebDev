@@ -1,23 +1,25 @@
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { setUser } from '../reducers/userReducer';
+import { useNavigate } from 'react-router-dom';
 
-const LoggedUser = () => {
+const LoggedUser = ({ user }) => {
+  const navigate = useNavigate();
   const dispatch = useDispatch();
-  const user = useSelector((state) => state.user);
 
   return (
-    <div>
-      <div>{user.name} loggged in </div>
+    <span>
+      {user.name} loggged in
       <button
-        style={{ display: 'block' }}
+        style={{ marginLeft: 5 }}
         onClick={() => {
           window.localStorage.removeItem('loggedUser');
           dispatch(setUser(null));
+          navigate('/');
         }}
       >
         logout
       </button>
-    </div>
+    </span>
   );
 };
 

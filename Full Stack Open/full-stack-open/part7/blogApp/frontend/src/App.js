@@ -1,12 +1,12 @@
 import { useEffect } from 'react';
 
-import LoginForm from './components/LoginForm';
 import Notification from './components/Notification';
-import LoggedUser from './components/LoggedUser';
 import HomeView from './components/HomeView';
 import UsersView from './components/UsersView';
+import LoginView from './components/LoginView';
+import Menu from './components/Menu';
 
-import { Routes, Route, Link, useMatch } from 'react-router-dom';
+import { Routes, Route } from 'react-router-dom';
 
 import { useSelector, useDispatch } from 'react-redux';
 import { setUser } from './reducers/userReducer';
@@ -28,23 +28,13 @@ const App = () => {
 
   return (
     <div>
-      {user === null ? (
-        <div>
-          <h2>login to application</h2>
-          <Notification />
-          <LoginForm />
-        </div>
-      ) : (
-        <div>
-          <h2>blogs</h2>
-          <Notification />
-          <LoggedUser />
-          <Routes>
-            <Route path='/*' element={<HomeView />} />
-            <Route path='/users/*' element={<UsersView />} />
-          </Routes>
-        </div>
-      )}
+      <Menu user={user} />
+      <Notification />
+      <h1>blog app</h1>
+      <Routes>
+        <Route path='/*' element={user === null ? <LoginView /> : <HomeView />} />
+        <Route path='/users/*' element={user === null ? <LoginView /> : <UsersView />} />
+      </Routes>
     </div>
   );
 };
