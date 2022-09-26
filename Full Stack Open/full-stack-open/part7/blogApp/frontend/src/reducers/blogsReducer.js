@@ -1,4 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
+import BlogView from '../components/BlogView';
 import blogsService from '../services/blogs';
 import { setNotificationFor } from './notificationReducer';
 
@@ -67,6 +68,23 @@ export const removeBlog = (blog) => {
       dispatch(deleteBlog(blog.id));
       dispatch(
         setNotificationFor({ message: `successfully deleted blog ${blog.title} by ${blog.author}`, type: 'success' }, 5)
+      );
+    } catch (error) {
+      dispatch(setNotificationFor({ message: error.response.data.error, type: 'error' }, 5));
+    }
+  };
+};
+
+export const appendComment = (id, comment) => {
+  return async (dispatch) => {
+    try {
+      const updatedBlog = await blogsService.updateComments(id, comment);
+      dispatch(updateBlog(updatedBlog));
+      dispatch(
+        setNotificationFor(
+          { message: `successfully commented on blog ${blog.title} by ${blog.author}`, type: 'success' },
+          5
+        )
       );
     } catch (error) {
       dispatch(setNotificationFor({ message: error.response.data.error, type: 'error' }, 5));

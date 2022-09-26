@@ -2,19 +2,23 @@ import React from 'react';
 import { useDispatch } from 'react-redux';
 
 import { updateLikesFor } from '../reducers/blogsReducer';
-import { removeBlog } from '../reducers/blogsReducer';
+import { appendComment } from '../reducers/blogsReducer';
+
+import useField from '../hooks/useField';
 
 const BlogView = ({ blog }) => {
+  const comment = useField('text');
+
   const dispatch = useDispatch();
 
   const incrementLikes = (blog) => {
     dispatch(updateLikesFor(blog));
   };
 
-  const removeBlogFor = (blog) => {
-    if (window.confirm(`Remove blog ${blog.title} by ${blog.author}`)) {
-      dispatch(removeBlog(blog));
-    }
+  const addComment = (event) => {
+    event.preventDefault();
+    dispatch(appendComment(blog.id, comment));
+    comment.reset();
   };
 
   if (!blog) {
@@ -31,7 +35,17 @@ const BlogView = ({ blog }) => {
           like
         </button>
       </p>
-      <p>{blog.user.name}</p>
+      <p>added by {blog.user.name}</p>
+      <h3>comments</h3>
+      <form onSubmit={addComment}>
+        <input {...comment.fields}></input>
+        <button type='submit'>add comment</button>
+      </form>
+      <ul>
+        {blog.comments.map((comment) => {
+          return <li key={comment}>{comment}</li>;
+        })}
+      </ul>
     </div>
   );
 };

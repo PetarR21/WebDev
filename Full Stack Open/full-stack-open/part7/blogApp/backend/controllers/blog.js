@@ -37,6 +37,20 @@ blogsRouter.post('/', middleware.userExtractor, async (request, response) => {
   response.status(201).json(blogToReturn);
 });
 
+blogsRouter.post('/:id/comments', middleware.userExtractor, async (request, response) => {
+  const id = request.params.id;
+  const { comment } = request.body;
+  const blog = await Blog.findById(id);
+
+  if (!blog) {
+    response.status(404).end();
+  }
+
+  blog.comments = blog.comments.concat(comment);
+  const savedBlog = await blog.save();
+  response.status(201).json(savedBlog);
+});
+
 blogsRouter.delete('/:id', middleware.userExtractor, async (request, response) => {
   const id = request.params.id;
   const blogToDelete = await Blog.findById(id);
