@@ -18,8 +18,8 @@ const HomeView = () => {
   const blog = match ? blogs.find((blog) => blog.id === match.params.id) : null;
 
   return (
-    <div>
-      <h2>blogs</h2>
+    <div className='container mx-auto p-6 '>
+      <h2 className='text-4xl'>List of blogs</h2>
       <Routes>
         <Route path='/' element={<BlogsView />} />
         <Route path='/blogs/:id' element={<BlogView blog={blog} />} />

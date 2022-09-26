@@ -27,10 +27,9 @@ const App = () => {
   }, []);
 
   return (
-    <div>
+    <div className='min-h-screen'>
       <Menu user={user} />
       <Notification />
-      <h1>blog app</h1>
       <Routes>
         <Route path='/*' element={user === null ? <LoginView /> : <HomeView />} />
         <Route path='/users/*' element={user === null ? <LoginView /> : <UsersView />} />

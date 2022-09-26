@@ -7,10 +7,10 @@ const LoggedUser = ({ user }) => {
   const dispatch = useDispatch();
 
   return (
-    <span>
-      {user.name} loggged in
+    <span className='flex items-center'>
+      <span className=' text-2xl text-gray-600 italic'>{user.name} loggged in</span>
       <button
-        style={{ marginLeft: 5 }}
+        className='ml-2 px-6 py-2 text-white bg-brightRed rounded-full hover:bg-brightRedLight'
         onClick={() => {
           window.localStorage.removeItem('loggedUser');
           dispatch(setUser(null));

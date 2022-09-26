@@ -25,23 +25,46 @@ const BlogsForm = () => {
 
   return (
     <Togglable buttonLabel='new blog' ref={togglableRef}>
-      <h2>create new</h2>
-      <form onSubmit={addBlog} className='formDiv'>
+      <form onSubmit={addBlog} className='formDiv flex flex-col gap-5'>
         <div>
-          title
-          <input id='title' className='titleInput' {...title.fields} />
+          <label for='title' class='block mb-2 text-2xl font-medium text-gray-900 dark:text-gray-300'>
+            Title
+          </label>
+          <input
+            id='title'
+            className='titleInput bg-gray-50 border border-gray-300 text-gray-900 text-lg rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500'
+            {...title.fields}
+          />
         </div>
         <div>
-          author
-          <input id='author' className='authorInput' {...author.fields} />
+          <label for='author' class='block mb-2 text-2xl font-medium text-gray-900 dark:text-gray-300'>
+            Author
+          </label>
+          <input
+            id='author'
+            className='titleInput bg-gray-50 border border-gray-300 text-gray-900 text-lg rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500'
+            {...author.fields}
+          />
         </div>
         <div>
-          url
-          <input id='url' className='urlInput' {...url.fields} />
+          <label for='url' class='block mb-2 text-2xl font-medium text-gray-900 dark:text-gray-300'>
+            URL
+          </label>
+          <input
+            id='url'
+            className='titleInput bg-gray-50 border border-gray-300 text-gray-900 text-lg rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500'
+            {...url.fields}
+          />
         </div>
-        <button id='createBtn' type='submit'>
-          create
-        </button>
+        <div>
+          <button
+            id='createBtn'
+            type='submit'
+            className='text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 rounded-lg text-xl w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800'
+          >
+            create
+          </button>
+        </div>
       </form>
     </Togglable>
   );
