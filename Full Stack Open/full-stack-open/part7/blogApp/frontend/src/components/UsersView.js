@@ -19,7 +19,7 @@ const UsersView = () => {
   }, []);
 
   return (
-    <div>
+    <div className='container mx-auto p-6 mt-12'>
       <Routes>
         <Route path='/' element={<UsersList users={users} />} />
         <Route path='/:id' element={<User user={user} />} />

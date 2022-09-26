@@ -7,6 +7,10 @@ import { appendComment } from '../reducers/blogsReducer';
 import useField from '../hooks/useField';
 
 const BlogView = ({ blog }) => {
+  if (!blog) {
+    return null;
+  }
+
   const comment = useField('text');
 
   const dispatch = useDispatch();
@@ -20,10 +24,6 @@ const BlogView = ({ blog }) => {
     dispatch(appendComment(blog.id, comment.fields.value));
     comment.reset();
   };
-
-  if (!blog) {
-    return null;
-  }
 
   return (
     <div className='flex flex-col gap-9 text-2xl'>

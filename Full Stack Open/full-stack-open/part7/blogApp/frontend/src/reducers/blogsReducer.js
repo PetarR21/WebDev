@@ -39,7 +39,7 @@ export const createBlog = (blogObject) => {
       dispatch(appendBlog(createdBlog));
       dispatch(
         setNotificationFor(
-          { message: `successfully created blog ${createdBlog.title} by ${createdBlog.author}`, type: 'success' },
+          { message: `successfully created blog "${createdBlog.title}" by ${createdBlog.author}`, type: 'success' },
           5
         )
       );
@@ -53,7 +53,7 @@ export const updateLikesFor = (blog) => {
       const updatedBlog = await blogsService.update(blog.id, { likes: blog.likes + 1 });
       dispatch(updateBlog(updatedBlog));
       dispatch(
-        setNotificationFor({ message: `successfully liked blog ${blog.title} by ${blog.author}`, type: 'success' }, 5)
+        setNotificationFor({ message: `successfully liked blog "${blog.title}" by ${blog.author}`, type: 'success' }, 5)
       );
     } catch (error) {
       console.log(error);
@@ -68,7 +68,10 @@ export const removeBlog = (blog) => {
       await blogsService.removeBlog(blog.id);
       dispatch(deleteBlog(blog.id));
       dispatch(
-        setNotificationFor({ message: `successfully deleted blog ${blog.title} by ${blog.author}`, type: 'success' }, 5)
+        setNotificationFor(
+          { message: `successfully deleted blog "${blog.title}" by ${blog.author}`, type: 'success' },
+          5
+        )
       );
     } catch (error) {
       dispatch(setNotificationFor({ message: error.response.data.error, type: 'error' }, 5));
@@ -83,7 +86,10 @@ export const appendComment = (id, comment) => {
       dispatch(updateBlog(updatedBlog));
       dispatch(
         setNotificationFor(
-          { message: `successfully commented on blog ${updatedBlog.title} by ${updatedBlog.author}`, type: 'success' },
+          {
+            message: `successfully commented on blog "${updatedBlog.title}" by ${updatedBlog.author}`,
+            type: 'success',
+          },
           5
         )
       );

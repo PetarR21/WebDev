@@ -28,6 +28,7 @@ const App = () => {
 
   return (
     <div className='min-h-screen'>
+      <div className='hidden bg-red-100 bg-green-100 text-green-700 text-red-700'></div>
       <Menu user={user} />
       <Notification />
       <Routes>
