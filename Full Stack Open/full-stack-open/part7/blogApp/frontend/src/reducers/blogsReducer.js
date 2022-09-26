@@ -56,6 +56,7 @@ export const updateLikesFor = (blog) => {
         setNotificationFor({ message: `successfully liked blog ${blog.title} by ${blog.author}`, type: 'success' }, 5)
       );
     } catch (error) {
+      console.log(error);
       dispatch(setNotificationFor({ message: error.response.data.error, type: 'error' }, 5));
     }
   };
@@ -82,11 +83,12 @@ export const appendComment = (id, comment) => {
       dispatch(updateBlog(updatedBlog));
       dispatch(
         setNotificationFor(
-          { message: `successfully commented on blog ${blog.title} by ${blog.author}`, type: 'success' },
+          { message: `successfully commented on blog ${updatedBlog.title} by ${updatedBlog.author}`, type: 'success' },
           5
         )
       );
     } catch (error) {
+      console.log(error);
       dispatch(setNotificationFor({ message: error.response.data.error, type: 'error' }, 5));
     }
   };

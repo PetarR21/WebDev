@@ -17,7 +17,7 @@ const BlogView = ({ blog }) => {
 
   const addComment = (event) => {
     event.preventDefault();
-    dispatch(appendComment(blog.id, comment));
+    dispatch(appendComment(blog.id, comment.fields.value));
     comment.reset();
   };
 
