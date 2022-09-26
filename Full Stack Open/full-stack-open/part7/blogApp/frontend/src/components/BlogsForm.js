@@ -27,7 +27,7 @@ const BlogsForm = () => {
     <Togglable buttonLabel='new blog' ref={togglableRef}>
       <form onSubmit={addBlog} className='formDiv flex flex-col gap-5'>
         <div>
-          <label for='title' class='block mb-2 text-2xl font-medium text-gray-900 dark:text-gray-300'>
+          <label htmlFor='title' className='block mb-2 text-2xl font-medium text-gray-900 dark:text-gray-300'>
             Title
           </label>
           <input
@@ -37,7 +37,7 @@ const BlogsForm = () => {
           />
         </div>
         <div>
-          <label for='author' class='block mb-2 text-2xl font-medium text-gray-900 dark:text-gray-300'>
+          <label htmlFor='author' className='block mb-2 text-2xl font-medium text-gray-900 dark:text-gray-300'>
             Author
           </label>
           <input
@@ -47,7 +47,7 @@ const BlogsForm = () => {
           />
         </div>
         <div>
-          <label for='url' class='block mb-2 text-2xl font-medium text-gray-900 dark:text-gray-300'>
+          <label htmlFor='url' className ='block mb-2 text-2xl font-medium text-gray-900 dark:text-gray-300'>
             URL
           </label>
           <input

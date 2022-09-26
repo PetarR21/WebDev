@@ -19,7 +19,7 @@ const HomeView = () => {
 
   return (
     <div className='container mx-auto p-6 '>
-      <h2 className='text-4xl'>List of blogs</h2>
+      
       <Routes>
         <Route path='/' element={<BlogsView />} />
         <Route path='/blogs/:id' element={<BlogView blog={blog} />} />

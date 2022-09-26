@@ -23,7 +23,7 @@ export const loginUser = (username, password) => {
       window.localStorage.setItem('loggedUser', JSON.stringify(user));
       blogService.setToken(user.token);
     } catch (error) {
-      dispatch(setNotificationFor({ message: error.response.data.error, type: 'error' }, 5));
+      dispatch(setNotificationFor({ message: error.response.data.error, type: 'error' }, 500));
     }
   };
 };
