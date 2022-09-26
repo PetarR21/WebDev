@@ -19,6 +19,7 @@ const HomeView = () => {
 
   return (
     <div>
+      <h2>blogs</h2>
       <Routes>
         <Route path='/' element={<BlogsView />} />
         <Route path='/blogs/:id' element={<BlogView blog={blog} />} />

@@ -5,13 +5,12 @@ import { loginUser } from '../reducers/userReducer';
 const LoginForm = () => {
   const username = useField('text');
   const password = useField('password');
-  const user = useSelector((state) => state.user);
+
   const dispatch = useDispatch();
 
   const handleLogin = async (event) => {
     event.preventDefault();
     dispatch(loginUser(username.fields.value, password.fields.value));
-    
   };
 
   return (
