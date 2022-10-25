@@ -1,10 +1,17 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+
+import noteService from './services/note';
+
 import Note from './components/Note';
 
-const App = (props) => {
-  const [notes, setNotes] = useState(props.notes);
+const App = () => {
+  const [notes, setNotes] = useState([]);
   const [newNote, setNewNote] = useState('');
   const [showAll, setShowAll] = useState(true);
+
+  useEffect(() => {
+    noteService.getAll().then((notes) => setNotes(notes));
+  });
 
   const addNote = (event) => {
     event.preventDefault();
