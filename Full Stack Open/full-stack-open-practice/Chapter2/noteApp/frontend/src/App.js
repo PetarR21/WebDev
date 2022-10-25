@@ -8,6 +8,7 @@ const App = () => {
   const [notes, setNotes] = useState([]);
   const [newNote, setNewNote] = useState('');
   const [showAll, setShowAll] = useState(true);
+  const [errorMessage, setErrorMessage] = useState('some error happened...');
 
   useEffect(() => {
     noteService.getAll().then((notes) => setNotes(notes));
@@ -27,9 +28,17 @@ const App = () => {
 
   const toggleImportanceOf = async (id) => {
     const noteToUpdate = notes.find((note) => +note.id == +id);
-    const updatedNote = await noteService.updateNote(id, { ...noteToUpdate, important: !noteToUpdate.important });
+    try {
+      const updatedNote = await noteService.updateNote(id, { ...noteToUpdate, important: !noteToUpdate.important });
 
-    setNotes(notes.map((note) => (note.id == id ? updatedNote : note)));
+      setNotes(notes.map((note) => (note.id == id ? updatedNote : note)));
+    } catch (error) {
+      setErrorMessage(`Note '${noteToUpdate.content}' was already removed from server`);
+      setTimeout(() => {
+        setErrorMessage(null);
+      }, 5000);
+      setNotes(notes.filter((n) => n.id !== id));
+    }
   };
 
   const notesToShow = showAll ? notes : [...notes].filter((note) => note.important);
