@@ -11,18 +11,25 @@ const App = () => {
 
   useEffect(() => {
     noteService.getAll().then((notes) => setNotes(notes));
-  });
+  }, []);
 
-  const addNote = (event) => {
+  const addNote = async (event) => {
     event.preventDefault();
     const newNoteObject = {
-      id: notes.length + 1,
       content: newNote,
       date: new Date(),
       important: Math.random() > 0.5,
     };
-    setNotes(notes.concat(newNoteObject));
+    const savedNote = await noteService.create(newNoteObject);
+    setNotes(notes.concat(savedNote));
     setNewNote('');
+  };
+
+  const toggleImportanceOf = async (id) => {
+    const noteToUpdate = notes.find((note) => +note.id == +id);
+    const updatedNote = await noteService.updateNote(id, { ...noteToUpdate, important: !noteToUpdate.important });
+
+    setNotes(notes.map((note) => (note.id == id ? updatedNote : note)));
   };
 
   const notesToShow = showAll ? notes : [...notes].filter((note) => note.important);
@@ -41,7 +48,7 @@ const App = () => {
       </div>
       <ul>
         {[...notesToShow].map((note) => (
-          <Note key={note.id} note={note} />
+          <Note key={note.id} note={note} toggleImportance={() => toggleImportanceOf(note.id)} />
         ))}
       </ul>
       <form onSubmit={addNote}>

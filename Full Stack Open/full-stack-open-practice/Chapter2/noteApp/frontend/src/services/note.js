@@ -6,4 +6,17 @@ const getAll = async () => {
   return response.data;
 };
 
-export default { getAll };
+const create = async (noteObject) => {
+  const response = await axios.post(baseUrl, noteObject);
+  return response.data;
+};
+
+const deleteNote = async (id) => {
+  await axios.delete(`${baseUrl}/${id}`);
+};
+
+const updateNote = async (id, noteObject) => {
+  const response = await axios.put(`${baseUrl}/${id}`, noteObject);
+  return response.data;
+};
+export default { getAll, create, deleteNote, updateNote };
