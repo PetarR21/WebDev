@@ -40,7 +40,7 @@ const App = () => {
   };
 
   const deletePerson = async (id) => {
-    const personToDelete = persons.find((person) => +person.id === +id);
+    const personToDelete = persons.find((person) => person.id === id);
     if (window.confirm(`Delete ${personToDelete.name} ?`)) {
       try {
         await personService.deletePerson(id);
@@ -66,13 +66,12 @@ const App = () => {
     const personToUpdate = persons.find((person) => person.name === newName);
     if (window.confirm(`${personToUpdate.name} is already added to phonebok, replace the old number with a new one?`)) {
       const updatedPerson = await personService.updatePerson(personToUpdate.id, {
-        ...personToUpdate,
         number: newNumber,
       });
       setPersons(persons.map((person) => (person.id === updatedPerson.id ? updatedPerson : person)));
       setNewName('');
       setNewNumber('');
-      setNotification({ type: 'success', message: `Updated ${updatedPerson.name} number to ${updatePerson.number}` });
+      setNotification({ type: 'success', message: `Updated ${updatedPerson.name} number to ${updatedPerson.number}` });
       setTimeout(() => {
         setNotification(null);
       }, 5000);

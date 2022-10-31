@@ -18,8 +18,6 @@ const App = () => {
     event.preventDefault();
     const newNoteObject = {
       content: newNote,
-      date: new Date(),
-      important: Math.random() > 0.5,
     };
     const savedNote = await noteService.create(newNoteObject);
     setNotes(notes.concat(savedNote));
@@ -27,7 +25,7 @@ const App = () => {
   };
 
   const toggleImportanceOf = async (id) => {
-    const noteToUpdate = notes.find((note) => +note.id == +id);
+    const noteToUpdate = notes.find((note) => note.id == id);
     try {
       const updatedNote = await noteService.updateNote(id, { ...noteToUpdate, important: !noteToUpdate.important });
 
