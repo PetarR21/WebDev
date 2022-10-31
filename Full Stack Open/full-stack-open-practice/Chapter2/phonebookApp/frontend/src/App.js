@@ -28,15 +28,24 @@ const App = () => {
       name: newName,
       number: newNumber,
     };
-    const savedPerson = await personService.create(newPerson);
-    setPersons(persons.concat(savedPerson));
-    setNewName('');
-    setNewNumber('');
 
-    setNotification({ type: 'success', message: `Added ${savedPerson.name}` });
-    setTimeout(() => {
-      setNotification(null);
-    }, 5000);
+    try {
+      const savedPerson = await personService.create(newPerson);
+      setPersons(persons.concat(savedPerson));
+      setNewName('');
+      setNewNumber('');
+
+      setNotification({ type: 'success', message: `Added ${savedPerson.name}` });
+      setTimeout(() => {
+        setNotification(null);
+      }, 5000);
+    } catch (error) {
+      console.log(error);
+      setNotification({ type: 'error', message: error.response.data.error });
+      setTimeout(() => {
+        setNotification(null);
+      }, 5000);
+    }
   };
 
   const deletePerson = async (id) => {
@@ -65,16 +74,27 @@ const App = () => {
   const updatePerson = async () => {
     const personToUpdate = persons.find((person) => person.name === newName);
     if (window.confirm(`${personToUpdate.name} is already added to phonebok, replace the old number with a new one?`)) {
-      const updatedPerson = await personService.updatePerson(personToUpdate.id, {
-        number: newNumber,
-      });
-      setPersons(persons.map((person) => (person.id === updatedPerson.id ? updatedPerson : person)));
-      setNewName('');
-      setNewNumber('');
-      setNotification({ type: 'success', message: `Updated ${updatedPerson.name} number to ${updatedPerson.number}` });
-      setTimeout(() => {
-        setNotification(null);
-      }, 5000);
+      try {
+        const updatedPerson = await personService.updatePerson(personToUpdate.id, {
+          number: newNumber,
+        });
+        setPersons(persons.map((person) => (person.id === updatedPerson.id ? updatedPerson : person)));
+        setNewName('');
+        setNewNumber('');
+        setNotification({
+          type: 'success',
+          message: `Updated ${updatedPerson.name} number to ${updatedPerson.number}`,
+        });
+        setTimeout(() => {
+          setNotification(null);
+        }, 5000);
+      } catch (error) {
+        console.log(error);
+        setNotification({ type: 'error', message: error.response.data.error });
+        setTimeout(() => {
+          setNotification(null);
+        }, 5000);
+      }
     }
   };
 
