@@ -6,7 +6,8 @@
   "scripts": {
     "start": "node index.js",
     "dev": "nodemon index.js",
-    "build:ui": "rm -rf build && cd ../frontend/ && npm run build && cp -r build ../backend"
+    "build:ui": "rm -rf build && cd ../frontend/ && npm run build && cp -r build ../backend",
+    "test": "jest --verbose"
   },
   "author": "",
   "license": "ISC",
@@ -18,5 +19,8 @@
   },
   "devDependencies": {
     "nodemon": "^2.0.20"
+  },
+  "jest": {
+    "testEnvironment": "node"
   }
 }
