@@ -1,9 +1,15 @@
-import mongoose from 'mongoose';
+const mongoose = require('mongoose');
 
 const blogSchema = new mongoose.Schema({
-  title: String,
+  title: {
+    type: String,
+    required: true,
+  },
   author: String,
-  url: String,
+  url: {
+    type: String,
+    required: true,
+  },
   likes: Number,
 });
 
@@ -15,6 +21,4 @@ blogSchema.set('toJSON', {
   },
 });
 
-const Blog = mongoose.model('Blog', blogSchema);
-
-export default Blog;
+module.exports = mongoose.model('Blog', blogSchema);
