@@ -31,7 +31,7 @@ const App = () => {
     try {
       const user = await loginService.login(credidentials);
       setUser(user);
-      
+
       blogService.setToken(user.token);
       window.localStorage.setItem('loggedUserJSON', JSON.stringify(user));
     } catch (error) {
@@ -82,6 +82,32 @@ const App = () => {
     }, 4000);
   };
 
+  const incrementLikesFor = async (blog) => {
+    try {
+      const updatedBlog = await blogService.updateBlog(blog.id, { likes: blog.likes + 1 });
+      setBlogs([...blogs].map((b) => (b.id === updatedBlog.id ? updatedBlog : b)));
+      showNotification({ message: `Successfully liked ${blog.title} by ${blog.author}`, type: 'success' });
+    } catch (error) {
+      showNotification({ message: error.response.data.error, type: 'error' });
+    }
+  };
+
+  const sortedBlogs = [...blogs].sort((a, b) => {
+    return b.likes - a.likes;
+  });
+
+  const removeBlog = async (blog) => {
+    if (window.confirm(`Remove blog ${blog.title} by ${blog.author}?`)) {
+      try {
+        await blogService.removeBlog(blog.id);
+        setBlogs([...blogs].filter((b) => b.id !== blog.id));
+        showNotification({ message: `Successfully removed ${blog.title} by ${blog.author}`, type: 'success' });
+      } catch (error) {
+        showNotification({ message: error.response.data.error, type: 'error' });
+      }
+    }
+  };
+
   return (
     <div>
       {user === null ? (
@@ -94,8 +120,15 @@ const App = () => {
             {user.name} logged in <button onClick={logout}>logout</button>
           </p>
           {blogForm()}
-          {blogs.map((blog) => (
-            <Blog key={blog.id} blog={blog} />
+          {sortedBlogs.map((blog) => (
+            <Blog
+              key={blog.id}
+              blog={blog}
+              updateLikes={() => {
+                incrementLikesFor(blog);
+              }}
+              removeBlog={removeBlog}
+            />
           ))}
         </div>
       )}
