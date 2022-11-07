@@ -27,6 +27,7 @@ const BlogForm = ({ createBlog }) => {
               setTitle(target.value);
             }}
             className='titleInput'
+            id='title'
           />
         </div>
         <div>
@@ -38,6 +39,7 @@ const BlogForm = ({ createBlog }) => {
               setAuthor(target.value);
             }}
             className='authorInput'
+            id='author'
           />
         </div>
         <div>
@@ -49,9 +51,10 @@ const BlogForm = ({ createBlog }) => {
               setUrl(target.value);
             }}
             className='urlInput'
+            id='url'
           />
         </div>
-        <button type='submit' className='submitBtn'>
+        <button type='submit' className='submitBtn' id='submitBtn'>
           create
         </button>
       </form>

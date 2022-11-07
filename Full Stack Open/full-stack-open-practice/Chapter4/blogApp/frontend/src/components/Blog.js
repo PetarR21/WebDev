@@ -14,7 +14,7 @@ const Blog = ({ blog, updateLikes, removeBlog }) => {
   const showWhenVisible = { display: visible ? '' : 'none' };
 
   return (
-    <div style={blogStyle}>
+    <div style={blogStyle} className='blog'>
       <div className='blogDefault'>
         {blog.title} {blog.author}{' '}
         <button
