@@ -23,4 +23,15 @@ export const initializeBlogs = () => {
   };
 };
 
+export const createBlog = (object) => {
+  return async (dispatch) => {
+    try {
+      const savedBlog = await blogService.createNew(object);
+      dispatch(appendBlog(savedBlog));
+    } catch (error) {
+      throw new Error('error');
+    }
+  };
+};
+
 export default blogSlice.reducer;

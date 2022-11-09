@@ -1,5 +1,12 @@
 import axios from 'axios';
+import userService from './user';
 const baseUrl = '/api/blogs';
+
+const config = () => {
+  return {
+    headers: { Authorization: `bearer ${userService.getToken()}` },
+  };
+};
 
 const getAll = async () => {
   const response = await axios.get(baseUrl);
@@ -7,7 +14,7 @@ const getAll = async () => {
 };
 
 const createNew = async (newObject) => {
-  const response = await axios.post(baseUrl, newObject);
+  const response = await axios.post(baseUrl, newObject, config());
   return response.data;
 };
 

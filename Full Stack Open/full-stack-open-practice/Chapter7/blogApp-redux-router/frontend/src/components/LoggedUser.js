@@ -6,13 +6,14 @@ const LoggedUser = ({ user }) => {
   const dispatch = useDispatch();
 
   const logout = () => {
-    userService.l
+    dispatch(logOutUser());
+    userService.clearUser();
   };
 
   return (
-    <h3>
+    <div>
       {user.name} logged in <button onClick={logout}>log out</button>
-    </h3>
+    </div>
   );
 };
 

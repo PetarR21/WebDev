@@ -1,8 +1,10 @@
 import { useDispatch } from 'react-redux';
 import { useField } from '../hooks';
+import { showNotification } from '../reducers/notification';
 import { logInUser } from '../reducers/user';
 import loginService from '../services/login';
 import userService from '../services/user';
+import Notification from './Notification';
 
 const LoginForm = () => {
   const username = useField('text', 'username');
@@ -18,14 +20,19 @@ const LoginForm = () => {
   const login = async (event) => {
     event.preventDefault();
 
-    const user = await loginService.login({ username: username.fields.value, password: password.fields.value });
-    userService.setUser(user);
-    dispatch(logInUser(user));
+    try {
+      const user = await loginService.login({ username: username.fields.value, password: password.fields.value });
+      userService.setUser(user);
+      dispatch(logInUser(user));
+    } catch (error) {
+      dispatch(showNotification({ message: 'Invalid username or password', type: 'error' }, 5));
+    }
   };
 
   return (
     <div>
       <h2>Log in to application</h2>
+      <Notification />
       <form onSubmit={login}>
         <div>
           <label htmlFor='username'>username</label>

@@ -20,23 +20,10 @@ blogsRouter.get('/:id', async (request, response, next) => {
   }
 });
 
-const getTokenFrom = (request) => {
-  const authorization = request.get('authorization');
-
-  if (authorization && authorization.toLowerCase().startsWith('bearer ')) {
-    return authorization.substring(7);
-  }
-  return null;
-};
-
 blogsRouter.post('/', middleware.userExtractor, async (request, response) => {
   const { title, author, url, likes } = request.body;
-  const decodedToken = jwt.verify(request.token, process.env.SECRET);
-  console.log(likes);
-  if (!decodedToken.id) {
-    return response.status(401).json({ error: 'token missing or invalid' });
-  }
-  const user = await User.findById(decodedToken.id);
+
+  const user = request.user;
 
   const blog = new Blog({
     title,
@@ -47,6 +34,7 @@ blogsRouter.post('/', middleware.userExtractor, async (request, response) => {
   });
 
   const savedBlog = await blog.save();
+  await savedBlog.populate('user', { username: 1, name: 1 });
   user.blogs = user.blogs.concat(savedBlog);
   await user.save();
 
