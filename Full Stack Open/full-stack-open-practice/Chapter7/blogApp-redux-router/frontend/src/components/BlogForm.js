@@ -19,19 +19,9 @@ const BlogForm = ({ blogFormRef }) => {
   const addBlog = async (event) => {
     event.preventDefault();
 
-    try {
-      dispatch(createBlog({ title: title.fields.value, author: author.fields.value, url: url.fields.value }));
-      blogFormRef.current.toggleVisibility();
-      dispatch(
-        showNotification(
-          { message: `Added blog '${title.fields.value}' by ${author.fields.value}`, type: 'success' },
-          5
-        )
-      );
-      reset();
-    } catch (error) {
-      console.log('invalid');
-    }
+    dispatch(
+      createBlog({ title: title.fields.value, author: author.fields.value, url: url.fields.value }, blogFormRef, reset)
+    );
   };
 
   return (

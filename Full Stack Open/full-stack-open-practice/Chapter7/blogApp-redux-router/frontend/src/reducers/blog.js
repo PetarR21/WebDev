@@ -1,5 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit';
 import blogService from '../services/blog';
+import { showNotification } from './notification';
 
 const blogSlice = createSlice({
   name: 'blogs',
@@ -23,13 +24,18 @@ export const initializeBlogs = () => {
   };
 };
 
-export const createBlog = (object) => {
+export const createBlog = (object, blogFormRef, reset) => {
   return async (dispatch) => {
     try {
       const savedBlog = await blogService.createNew(object);
       dispatch(appendBlog(savedBlog));
+      dispatch(
+        showNotification({ message: `Added blog '${savedBlog.title}' by ${savedBlog.author}`, type: 'success' }, 5)
+      );
+      blogFormRef.current.toggleVisibility();
+      reset();
     } catch (error) {
-      throw new Error('error');
+      dispatch(showNotification({ message: error.response.data.error, type: 'error' }, 5));
     }
   };
 };
