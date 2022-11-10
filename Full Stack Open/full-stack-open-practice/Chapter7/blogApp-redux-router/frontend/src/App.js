@@ -8,7 +8,7 @@ import Notification from './components/Notification';
 import User from './components/User';
 import BlogView from './components/BlogView';
 
-import { Routes, Route } from 'react-router-dom';
+import { Routes, Route, Link } from 'react-router-dom';
 
 import { logInUser } from './reducers/user';
 
@@ -19,6 +19,8 @@ const App = () => {
   const user = useSelector((state) => state.user);
   const dispatch = useDispatch();
   const blogFormRef = useRef();
+
+  const paddingRight = { paddingRight: 10 };
 
   useEffect(() => {
     const loggedUser = userService.getUser();
@@ -31,9 +33,19 @@ const App = () => {
         <LoginForm />
       ) : (
         <div>
-          <h1>blogs</h1>
+          <div style={{ background: 'gray', padding: 8 }}>
+            <Link style={paddingRight} to='/'>
+              blogs
+            </Link>
+            <Link style={paddingRight} to='/users'>
+              users
+            </Link>
+            <LoggedUser user={user} />
+          </div>
+
+          <h1>blog app</h1>
           <Notification />
-          <LoggedUser user={user} />
+
           <Routes>
             <Route path='/' element={<HomeView blogFormRef={blogFormRef} />} />
             <Route path='/blogs/:id' element={<BlogView />} />

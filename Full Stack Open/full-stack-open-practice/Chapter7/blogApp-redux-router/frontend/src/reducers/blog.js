@@ -70,4 +70,16 @@ export const deleteBlog = (blog) => {
   };
 };
 
+export const commentOnBlog = (blog, comment) => {
+  return async (dispatch) => {
+    try {
+      const savedBlog = await blogService.addComment(blog.id, { comment });
+      dispatch(update(savedBlog));
+      dispatch(showNotification({ message: `Successfully commented on blog '${blog.title}'`, type: 'success' }, 5));
+    } catch (error) {
+      dispatch(showNotification({ message: error.response.data.error, type: 'error' }, 5));
+    }
+  };
+};
+
 export default blogSlice.reducer;

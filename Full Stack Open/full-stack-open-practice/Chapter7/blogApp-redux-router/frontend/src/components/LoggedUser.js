@@ -11,9 +11,9 @@ const LoggedUser = ({ user }) => {
   };
 
   return (
-    <div>
+    <span>
       {user.name} logged in <button onClick={logout}>log out</button>
-    </div>
+    </span>
   );
 };
 

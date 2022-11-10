@@ -1,6 +1,6 @@
 const morgan = require('morgan');
 const logger = require('./logger');
-const User = require('../models/user');
+const User = require('../controllers/models/user');
 const jwt = require('jsonwebtoken');
 
 morgan.token('body', (request, response) => {
