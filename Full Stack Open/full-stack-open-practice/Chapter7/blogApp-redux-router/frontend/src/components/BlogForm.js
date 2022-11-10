@@ -1,7 +1,6 @@
 import { useDispatch } from 'react-redux';
 import { useField } from '../hooks';
 import { createBlog } from '../reducers/blog';
-import { showNotification } from '../reducers/notification';
 
 const BlogForm = ({ blogFormRef }) => {
   const title = useField('text', 'title');

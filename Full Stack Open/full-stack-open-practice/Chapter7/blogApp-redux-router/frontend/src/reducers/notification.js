@@ -21,7 +21,7 @@ export const showNotification = (notification, time) => {
     }
 
     dispatch(setNotification(notification));
-    setTimeout(() => {
+    timeout = setTimeout(() => {
       dispatch(setNotification(null));
     }, time * 1000);
   };

@@ -1,6 +1,10 @@
 import { useState } from 'react';
+import { useDispatch } from 'react-redux';
+import { likeBlog } from '../reducers/blog';
 
 const Blog = ({ blog }) => {
+  const dispatch = useDispatch();
+
   const blogStyle = {
     paddingTop: 10,
     paddingBottom: 10,
@@ -16,6 +20,10 @@ const Blog = ({ blog }) => {
     setVisible(!visible);
   };
 
+  const like = () => {
+    dispatch(likeBlog({ ...blog, likes: blog.likes + 1 }));
+  };
+
   const showWhenVisible = { display: visible ? 'block' : 'none' };
 
   return (
@@ -26,7 +34,7 @@ const Blog = ({ blog }) => {
       <div style={showWhenVisible}>
         <div>{blog.url}</div>
         <div>
-          likes {blog.likes} <button>like</button>
+          likes {blog.likes} <button onClick={like}>like</button>
         </div>
         <div>{blog.user.name}</div>
       </div>

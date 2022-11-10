@@ -4,7 +4,11 @@ import { initializeBlogs } from '../reducers/blog';
 import Blog from './Blog';
 
 const BlogList = () => {
-  const blogs = useSelector((state) => state.blogs);
+  const blogs = useSelector((state) => {
+    return [...state.blogs].sort((a, b) => {
+      return b.likes - a.likes;
+    });
+  });
   const dispatch = useDispatch();
 
   useEffect(() => {
