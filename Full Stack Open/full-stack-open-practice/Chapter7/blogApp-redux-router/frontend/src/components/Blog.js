@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { likeBlog } from '../reducers/blog';
+import { deleteBlog, likeBlog } from '../reducers/blog';
 
 const Blog = ({ blog }) => {
   const dispatch = useDispatch();
@@ -24,6 +24,12 @@ const Blog = ({ blog }) => {
     dispatch(likeBlog({ ...blog, likes: blog.likes + 1 }));
   };
 
+  const remove = () => {
+    if (window.confirm(`Delete blog ${blog.title} by ${blog.author}?`)) {
+      dispatch(deleteBlog(blog));
+    }
+  };
+
   const showWhenVisible = { display: visible ? 'block' : 'none' };
 
   return (
@@ -37,6 +43,7 @@ const Blog = ({ blog }) => {
           likes {blog.likes} <button onClick={like}>like</button>
         </div>
         <div>{blog.user.name}</div>
+        <button onClick={remove}>remove</button>
       </div>
     </div>
   );
