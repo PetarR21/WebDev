@@ -77,7 +77,7 @@ const typeDefs = gql`
   type Book {
     title: String!
     published: Int!
-    author: Author!
+    author: Author
     genres: [String!]!
     id: ID!
   }
@@ -102,7 +102,7 @@ const resolvers = {
       return (await Author.find({})).length;
     },
     allBooks: async (root, args) => {
-      const books = await Book.find({});
+      const books = await Book.find({}).populate('author');
 
       return books;
     },
@@ -111,32 +111,38 @@ const resolvers = {
     },
   },
   Author: {
-    bookCount: (root) => {
-      return books.filter((book) => book.author === root.name).length;
+    bookCount: async (root) => {
+      const books = await Book.find({}).populate('author');
+      return books.filter((book) => {
+        console.log(book);
+        return book.author.name === root.name;
+      }).length;
     },
   },
   Mutation: {
     addBook: async (root, args) => {
-      const book = { ...args, id: uuid() };
-
-      const authors = await Author.find({});
-      if (!authors.map((a) => a.name).includes(args.author)) {
-        const author = new Author({ name: args.author, born: null, bookCount: 1 });
-        await author.save();
+      let author = await Author.findOne({ name: args.author });
+      if (!author) {
+        const newAuthor = new Author({ name: args.author, born: null });
+        author = await newAuthor.save();
       }
-
-      
-      return book;
+      const book = new Book({
+        title: args.title,
+        author: author.id,
+        published: args.published,
+        genres: args.genres,
+      });
+      const savedBook = await (await book.save()).populate('author');
+      return savedBook;
     },
-    editAuthor: (root, args) => {
-      const author = authors.find((author) => author.name === args.name);
+    editAuthor: async (root, args) => {
+      const author = await Author.findOne({ name: args.name });
       if (!author) {
         return null;
       }
 
-      const updatedAuthor = { ...author, born: args.setBornTo };
-      authors = authors.map((author) => (author.name === updatedAuthor.name ? updatedAuthor : author));
-      return updatedAuthor;
+      author.born = args.setBornTo;
+      return author.save();
     },
   },
 };
