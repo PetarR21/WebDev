@@ -55,22 +55,24 @@ const Authors = (props) => {
           ))}
         </tbody>
       </table>
-      <div>
-        <h2>Set birthyear</h2>
-        <form onSubmit={update}>
-          <Select defaultValue={selectedOption} onChange={setSelectedOption} options={options} />
-          <div>
-            born:{' '}
-            <input
-              value={born}
-              onChange={({ target }) => {
-                setBorn(target.value);
-              }}
-            />
-          </div>
-          <button type='submit'>update author</button>
-        </form>
-      </div>
+      {props.token ? (
+        <div>
+          <h2>Set birthyear</h2>
+          <form onSubmit={update}>
+            <Select defaultValue={selectedOption} onChange={setSelectedOption} options={options} />
+            <div>
+              born:{' '}
+              <input
+                value={born}
+                onChange={({ target }) => {
+                  setBorn(target.value);
+                }}
+              />
+            </div>
+            <button type='submit'>update author</button>
+          </form>
+        </div>
+      ) : null}
     </div>
   );
 };
