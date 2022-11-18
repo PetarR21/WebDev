@@ -56,7 +56,7 @@ const Authors = (props) => {
           ))}
         </tbody>
       </table>
-      <div>
+      <div style={{ display: props.token === null ? 'none' : '' }}>
         <h3>Set birthyear</h3>
         <form>
           <Select defaultValue={selectedOption} onChange={setSelectedOption} options={options} />

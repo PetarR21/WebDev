@@ -48,6 +48,7 @@ const typeDefs = gql`
     authorCount: Int!
     allBooks(author: String, genre: String): [Book!]!
     allAuthors: [Author!]!
+    allGenres: [String!]!
     me: User
   }
 
@@ -91,6 +92,19 @@ const resolvers = {
     allAuthors: async () => {
       const authors = await Author.find({});
       return authors;
+    },
+    allGenres: async () => {
+      let genres = [];
+      const books = await Book.find({});
+      books.forEach((book) => {
+        book.genres.forEach((genre) => {
+          if (!genres.includes(genre)) {
+            genres = genres.concat(genre);
+          }
+        });
+      });
+
+      return genres;
     },
     me: async (root, args, { currentUser }) => {
       return currentUser;
