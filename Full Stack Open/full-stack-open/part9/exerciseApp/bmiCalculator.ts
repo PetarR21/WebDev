@@ -14,4 +14,4 @@ const calculateBmi = (height: number, weight: number): String => {
   }
 };
 
-console.log(calculateBmi(192, 97));
+console.log(calculateBmi(Number(process.argv[2]), Number(process.argv[3])));
