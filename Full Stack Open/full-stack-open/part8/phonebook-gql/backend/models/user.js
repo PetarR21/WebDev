@@ -1,10 +1,10 @@
-const mongoose = require('mongoose');
+const mongoose = require('mongoose')
 
 const schema = new mongoose.Schema({
   username: {
     type: String,
     required: true,
-    minLength: 3,
+    minlength: 3,
   },
   friends: [
     {
@@ -12,6 +12,6 @@ const schema = new mongoose.Schema({
       ref: 'Person',
     },
   ],
-});
+})
 
-module.exports = mongoose.model('User', schema);
+module.exports = mongoose.model('User', schema)
