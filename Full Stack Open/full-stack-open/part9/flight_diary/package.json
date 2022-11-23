@@ -1,25 +1,21 @@
 {
-  "name": "app",
+  "name": "flight_diary",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "index.ts",
   "scripts": {
-    "ts-node": "ts-node",
-    "multiply": "ts-node multiplier.ts",
-    "calculate": "ts-node calculator.ts",
-    "start": "ts-node index.ts",
-    "dev": "ts-node-dev index.ts",
-    "lint": "eslint --ext .ts ."
+    "tsc": "tsc",
+    "dev": "ts-node-dev src/index.ts",
+    "lint": "eslint --ext .ts .",
+    "start": "node build/index.js"
   },
-  "keywords": [],
-  "author": "",
+  "author": "Petar Rakocevic",
   "license": "ISC",
   "devDependencies": {
     "@types/express": "^4.17.14",
     "@typescript-eslint/eslint-plugin": "^5.44.0",
     "@typescript-eslint/parser": "^5.44.0",
     "eslint": "^8.28.0",
-    "ts-node": "^10.9.1",
     "ts-node-dev": "^2.0.0",
     "typescript": "^4.9.3"
   },

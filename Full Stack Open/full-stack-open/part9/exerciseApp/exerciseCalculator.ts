@@ -35,3 +35,5 @@ const calculateExercises = (dailyHours: Array<number>, target: number): Result =
 const target: number = Number(process.argv[2]);
 const array: Array<number> = process.argv.slice(3).map((a) => Number(a));
 console.log(calculateExercises(array, target));
+
+export default calculateExercises;

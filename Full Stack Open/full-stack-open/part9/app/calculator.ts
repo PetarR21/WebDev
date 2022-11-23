@@ -27,3 +27,5 @@ try {
 }
 
 console.log(process.argv);
+
+export default calculator;
