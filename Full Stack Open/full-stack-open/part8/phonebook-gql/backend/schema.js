@@ -1,6 +1,10 @@
 const { gql } = require('apollo-server');
 
 const typeDefs = gql`
+  type Subscription {
+    personAdded: Person!
+  }
+
   type User {
     username: String!
     friends: [Person!]!
@@ -41,10 +45,6 @@ const typeDefs = gql`
     createUser(username: String!): User
     login(username: String!, password: String!): Token
     addAsFriend(name: String!): User
-  }
-
-  type Subscription {
-    personAdded: Person!
   }
 `;
 module.exports = typeDefs;

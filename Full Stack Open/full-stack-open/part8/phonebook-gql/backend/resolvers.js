@@ -1,11 +1,11 @@
-const { UserInputError, AuthenticationError } = require('apollo-server');
-const jwt = require('jsonwebtoken');
 const { PubSub } = require('graphql-subscriptions');
 const pubsub = new PubSub();
+const { UserInputError, AuthenticationError } = require('apollo-server');
+const jwt = require('jsonwebtoken');
 const Person = require('./models/person');
 const User = require('./models/user');
 
-const JWT_SECRET = 'NEED_HERE_A_SECRET_KEY';
+const JWT_SECRET = process.env.SECRET;
 
 const resolvers = {
   Query: {
@@ -32,13 +32,13 @@ const resolvers = {
   },
   Mutation: {
     addPerson: async (root, args, context) => {
+      const person = new Person({ ...args });
       const currentUser = context.currentUser;
 
       if (!currentUser) {
         throw new AuthenticationError('not authenticated');
       }
 
-      const person = new Person({ ...args });
       try {
         await person.save();
         currentUser.friends = currentUser.friends.concat(person);
@@ -109,7 +109,7 @@ const resolvers = {
   },
   Subscription: {
     personAdded: {
-      subscribe: () => pubsub.asyncIterator(['PERSON_ADDED']),
+      subscribe: () => pubsub.asyncIterator('PERSON_ADDED'),
     },
   },
 };

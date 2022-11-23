@@ -15,3 +15,5 @@ const calculateBmi = (height: number, weight: number): String => {
 };
 
 console.log(calculateBmi(Number(process.argv[2]), Number(process.argv[3])));
+
+export default calculateBmi;

@@ -65,3 +65,13 @@ export const LOGIN = gql`
     }
   }
 `;
+
+export const PERSON_ADDED = gql`
+  subscription {
+    personAdded {
+      ...PersonDetails
+    }
+  }
+
+  ${PERSON_DETAILS}
+`;

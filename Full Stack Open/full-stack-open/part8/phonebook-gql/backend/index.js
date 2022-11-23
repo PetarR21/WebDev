@@ -1,15 +1,16 @@
+require('dotenv').config();
+const { execute, subscribe } = require('graphql');
+const { WebSocketServer } = require('ws');
+const { useServer } = require('graphql-ws/lib/use/ws');
 const { ApolloServer } = require('apollo-server-express');
 const { ApolloServerPluginDrainHttpServer } = require('apollo-server-core');
 const { makeExecutableSchema } = require('@graphql-tools/schema');
 const express = require('express');
 const http = require('http');
 
-const { WebSocketServer } = require('ws');
-const { useServer } = require('graphql-ws/lib/use/ws');
-
 const jwt = require('jsonwebtoken');
 
-const JWT_SECRET = 'NEED_HERE_A_SECRET_KEY';
+const JWT_SECRET = process.env.SECRET;
 
 const mongoose = require('mongoose');
 
@@ -18,8 +19,7 @@ const User = require('./models/user');
 const typeDefs = require('./schema');
 const resolvers = require('./resolvers');
 
-const MONGODB_URI =
-  'mongodb+srv://fullstack:petar12345@cluster0.9t45w1v.mongodb.net/GQLPhonebook?retryWrites=true&w=majority';
+const MONGODB_URI = process.env.MONGODB_URI;
 
 console.log('connecting to', MONGODB_URI);
 
@@ -43,7 +43,6 @@ const start = async () => {
     server: httpServer,
     path: '/',
   });
-
   const serverCleanup = useServer({ schema }, wsServer);
 
   const server = new ApolloServer({
