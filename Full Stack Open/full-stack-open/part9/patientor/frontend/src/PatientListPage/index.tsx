@@ -13,6 +13,8 @@ import { TableRow } from '@material-ui/core';
 import { TableBody } from '@material-ui/core';
 import { Link } from 'react-router-dom';
 
+
+
 const PatientListPage = () => {
   const [{ patients }, dispatch] = useStateValue();
 
