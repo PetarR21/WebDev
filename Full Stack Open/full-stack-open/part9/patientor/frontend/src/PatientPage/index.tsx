@@ -46,7 +46,7 @@ const PatientPage = () => {
         return <HealthCheck healthCheckEntry={entry} />;
 
       case 'OccupationalHealthcare':
-        return <Occupational occupationalEntry={entry}/>;
+        return <Occupational occupationalEntry={entry} />;
 
       default:
         return assertNever(entry);
