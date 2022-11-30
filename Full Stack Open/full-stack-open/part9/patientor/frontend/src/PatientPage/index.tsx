@@ -9,24 +9,59 @@ import FemaleIcon from '@mui/icons-material/Female';
 import Hospital from '../components/Hospital';
 import HealthCheck from '../components/HealthCheck';
 import Occupational from '../components/Occupational';
-//import { Entry } from '../types';
+import { Button } from '@material-ui/core';
+import AddEntryModal from '../AddEntryModal';
+import { EntryFormValues } from '../AddEntryModal/AddEntryForm';
 
 const PatientPage = () => {
   const { id } = useParams<{ id: string }>();
   const [patient, setPatient] = useState<Patient | null>(null);
 
-  useEffect(() => {
-    const fetchPatient = async () => {
-      try {
-        // eslint-disable-next-line @typescript-eslint/restrict-template-expressions
-        const { data: patientFromApi } = await axios.get<Patient>(`${apiBaseUrl}/patients/${id}`);
+  const [modalOpen, setModalOpen] = useState<boolean>(false);
+  const [error, setError] = useState<string>();
 
-        setPatient(patientFromApi);
-      } catch (error) {
-        console.error(error);
+  const openModal = (): void => {
+    setModalOpen(true);
+    console.log(modalOpen);
+  };
+
+  const closeModal = (): void => {
+    setModalOpen(false);
+    setError(undefined);
+  };
+
+  const submitNewEntry = async (values: EntryFormValues) => {
+    console.log(values);
+    try {
+      //eslint-disable-next-line
+      await axios.post<Entry>(`${apiBaseUrl}/patients/${id}/entries`, values);
+
+      await fetchPatient();
+      closeModal();
+    } catch (e: unknown) {
+      if (axios.isAxiosError(e)) {
+        console.error(e?.response?.data || 'Unrecognized axios error');
+        setError(String(e?.response?.data?.error) || 'Unrecognized axios error');
+      } else {
+        console.error('Unknown error', e);
+        setError('Unknown error');
       }
-    };
+    }
+  };
 
+  const fetchPatient = async () => {
+    try {
+      // eslint-disable-next-line @typescript-eslint/restrict-template-expressions
+      const { data: patientFromApi } = await axios.get<Patient>(`${apiBaseUrl}/patients/${id}`);
+
+      setPatient(patientFromApi);
+      console.log('fetched');
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  useEffect(() => {
     void fetchPatient();
   }, []);
 
@@ -63,11 +98,15 @@ const PatientPage = () => {
       <h3>entries</h3>
       {patient.entries.map((e) => {
         return (
-          <div key={e.id} style={{ border: 'black 1px solid', borderRadius: 6, padding: 10 }}>
+          <div key={e.id} style={{ border: 'black 1px solid', borderRadius: 6, padding: 10, marginBottom: 25 }}>
             {getEntry(e)}
           </div>
         );
       })}
+      <AddEntryModal modalOpen={modalOpen} onSubmit={submitNewEntry} error={error} onClose={closeModal} />
+      <Button onClick={openModal} variant='contained' color='primary'>
+        ADD NEW ENTRY
+      </Button>
     </div>
   );
 };
